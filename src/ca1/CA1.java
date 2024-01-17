@@ -13,22 +13,46 @@ import java.util.Scanner;
  */
 public class CA1 {
 
-    /**
-     * @param args the command line arguments
-     */
+    public static boolean checkFirstName(String name) {
+        String firstName = name.substring(0, indexOf(" "));
+        return (firstName.matches("[a-zA-Z]+"));
+    }
+     public static boolean checkSecondName(String name) {
+        String SecondName = name.substring(indexOf(" "));
+        return (SecondName.matches("[A-Z0-9]+"));
+    }
+     public static boolean checkNumClasses(int numClasses){
+         return numClasses >= 1 && numClasses <= 8;
+             
+     }
+     public static boolean checkstudentNumLength(String studentNum){
+         return studentNum.length() >= 6;
+     }
+     public static boolean checkstudentNum(String studentNum){
+         String firstTwoChars = studentNum.substring(0, 2);
+         
+         try{
+             int firstTwoDigits = Integer.parseInt(firstTwoChars);
+             return firstTwoDigits >20;
+         } catch(Exception e) {
+             System.out.println("The first two characters are not numeric or not bigger than 20");             
+         }
+     }
     public static void main(String[] args) {
+        
+        
         String students = "students.txt";
          try{
             Scanner sc = new Scanner(new FileReader(students));
             
-            String line1 = sc.nextLine();
-            String line2 = sc.nextLine();
-            String line3 = sc.nextLine();
+            String name = sc.nextLine();
+            String numClasses = sc.nextLine();
+            String studentNum = sc.nextLine();
             
             
-            System.out.println("Line 1: " + line1);
-            System.out.println("Line 2: " + line2);
-            System.out.println("Line 3: " + line3);
+            System.out.println("Line 1: " + name);
+            System.out.println("Line 2: " + numClasses);
+            System.out.println("Line 3: " + studentNum);
             
             
             sc.close();
@@ -36,7 +60,13 @@ public class CA1 {
             } catch (Exception e) {
             System.out.println(e);
             }
+         
+         
         }
+
+    private static int indexOf(String a_) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
         
     }
     
