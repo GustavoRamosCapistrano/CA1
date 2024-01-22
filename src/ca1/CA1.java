@@ -55,7 +55,9 @@ public class CA1 {
         }
     }
 /**Validates the structure of the student number, ensuring the fifth character is a letter or number,
- * and the remaining characters (if any) are digits, with a value less than or equal to 200.*/
+ * and the remaining characters (if any) are digits, with a value less than or equal to 200
+     * @param studentNumString.
+     * @return */
     public static boolean checkStudentNum(String studentNumString) {
         char fifthChar = studentNumString.charAt(4);
         
@@ -75,11 +77,9 @@ public class CA1 {
                 int remainingDigits = Integer.parseInt(studentNumString.substring(4));
                 return remainingDigits <= 200;
             } catch (Exception e) {
-                System.out.println("Invalid student ID: Following characters must be digits.");
                 return false;
             }
         } else {
-            System.out.println("Invalid student ID: 5th character must be a letter or number.");
             return false;
         }
     }
@@ -90,6 +90,7 @@ public static boolean checkhasSecondName(String name){
 
 return spaceIndex != -1 && spaceIndex < name.length() - 1;
 }
+//determines the workload based on the classes number.
     public static String workload(int numClasses) {
         if (numClasses == 1) {
             return "Vary Light";
@@ -103,7 +104,7 @@ return spaceIndex != -1 && spaceIndex < name.length() - 1;
             return "Number of classes out of Range.";
         }
     }
-
+// validates all data for students and display helpfull mesages to know were are the error.
     public static boolean checkData(int numClasses, String studentNumString, String name) {
             if (checkhasSecondName(name)) {
             System.out.println("First and second name need to be separeted by a blank space.");
@@ -140,10 +141,10 @@ return spaceIndex != -1 && spaceIndex < name.length() - 1;
         return true;
 
     }
-
+// main method to run the student system.
     public static void main(String[] args) {
         Scanner scMenu = new Scanner(System.in);
-
+// menu to have options between Standart Operation e add via Console.
         OUTER:
         while (true) {
             System.out.println("Menu: ");
@@ -169,19 +170,21 @@ return spaceIndex != -1 && spaceIndex < name.length() - 1;
             }
         }
     }
-
+// method to run the standard Operation.
     private static void standardOperation() {
         String studentsFile = "students.txt";
-
+// opening scanner to read file.
         try ( Scanner sc = new Scanner(new FileReader(studentsFile));  BufferedWriter br = new BufferedWriter(new FileWriter("status.txt", true))) {
-
+// loop to read all the file.
             while (sc.hasNextLine()) {
                 String name = sc.nextLine();
                 String numClassesString = sc.nextLine();
                 String studentNumString = sc.nextLine();
 
                 int numClasses = Integer.parseInt(numClassesString);
+                //activating method to check data.
                 boolean checkedData = checkData(numClasses, studentNumString, name);
+                //writing to status.txt
                 if (checkedData) {
                     br.write(studentNumString + " - " + name.split(" ")[1]);
                     br.newLine();
@@ -195,7 +198,7 @@ return spaceIndex != -1 && spaceIndex < name.length() - 1;
             System.out.println("An error occurred: " + e.getMessage());
         }
     }
-
+// method to run Via console data.
     private static void addDataViaConsole() {
         Scanner scanner = new Scanner(System.in);
 
