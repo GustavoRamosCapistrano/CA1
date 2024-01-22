@@ -88,29 +88,30 @@ public class CA1 {
     public static void main(String[] args) {
             Scanner scMenu = new Scanner(System.in);
             
-            while (true){
-                System.out.println("Menu: ");
-                System.out.println("1. Standart Operation");
-                System.out.println("2. add data via Console");
-                System.out.println("3. Exit");
-                System.out.println("Choose an option: ");
-                
-                int choice = scMenu.nextInt();
-                scMenu.nextLine();
-                
-                if (choice == 1){
+        OUTER:
+        while (true) {
+            System.out.println("Menu: ");
+            System.out.println("1. Standart Operation");
+            System.out.println("2. add data via Console");
+            System.out.println("3. Exit");
+            System.out.println("Choose an option: ");
+            int choice = scMenu.nextInt();
+            scMenu.nextLine();
+            switch (choice) {
+                case 1:
                     standardOperation();
-                    break;
-                }else if (choice == 2){
+                    break OUTER;
+                case 2:
                     addDataViaConsole();
-                    break;
-                }else if (choice == 3){
+                    break OUTER;
+                case 3:
                     System.out.println("Exiting program.");
-                    break;
-                }else{
+                    break OUTER;
+                default:
                     System.out.println("Invalid choice. please enter a valid option.");
-                }
+                    break;
             }
+        }
     }
             private static void standardOperation(){
               String studentsFile = "students.txt";
@@ -146,7 +147,45 @@ public class CA1 {
              }
             }
              private static void addDataViaConsole(){
-                 
+                  Scanner scanner = new Scanner(System.in);
+
+        // Collect user input for each student
+        while (true) {
+            System.out.println("Enter student details or 'exit' to finish:");
+            System.out.print("Full Name (First Last): ");
+            String name = scanner.nextLine();
+
+            if (name.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            System.out.print("Number of Classes: ");
+            int numClasses = scanner.nextInt();
+            scanner.nextLine(); // Consume the newline character
+
+            System.out.print("Student Number: ");
+            String studentNum = scanner.nextLine();
+
+            // Validate and save data
+            try {
+                if (checkFirstName(name) && checkSecondName(name) && checkNumClasses(numClasses) && checkStudentNum(studentNum)) {
+                    String statusFileName = "status.txt";
+                    try (FileWriter fileWriter = new FileWriter(statusFileName, true);
+                         BufferedWriter writer = new BufferedWriter(fileWriter)) {
+
+                        writer.write(studentNum + " - " + name.split(" ")[1]);
+                        writer.newLine();
+                        writer.write(workload(numClasses));
+                        writer.newLine();
+                        writer.newLine(); // Add a double newline for better readability in the output file
+                    }
+                    System.out.println("Data is valid. Output saved to status.txt.");
+                }
+            } catch (Exception e) {
+                System.out.println("Error: " + e.getMessage());
+            }
+        }
+    
              }
              private static int indexOf(String input, String target){
                  return input.indexOf(target);
