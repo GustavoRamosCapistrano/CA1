@@ -55,10 +55,10 @@ public class CA1 {
                         
                         
                         char fifthChar = studentNum.charAt(4);
-                        if (Character.isLetter(fifthChar)) {
+                        if (!Character.isLetter(fifthChar)) {
                             int remainingDigits = Integer.parseInt(studentNum.substring(5));
                             return remainingDigits >= 1 && remainingDigits <= 0200;
-                        }else if(Character.isDigit(fifthChar)){
+                        }else if(!Character.isDigit(fifthChar)){
                             int remainingDigits = Integer.parseInt(studentNum.substring(4));
                             return remainingDigits >= 1 && remainingDigits <= 0200;   
                         }else{
@@ -84,7 +84,29 @@ public class CA1 {
                 return "Number of classes out of Range.";
             } 
     }
-
+public static boolean checkData(int numClasses, String studentNum, String name){
+       if (!checkStudentNum(studentNum)) {
+            System.out.println("Incorrect length");
+            return false;
+        }
+        
+        if (!checkNumClasses(numClasses)) {
+            System.out.println("First 7 characters are not numbers");
+            return false;
+        }
+        
+        if (!checkFirstName(name)) {
+            System.out.println("Last characters must be letters");
+            return false;
+        }
+         if (!checkSecondName(name)) {
+            System.out.println("Last characters must be letters");
+            return false;
+        }
+        System.out.println("Valid PPSN!");
+        return true;
+    
+}
     public static void main(String[] args) {
             Scanner scMenu = new Scanner(System.in);
             
@@ -114,8 +136,12 @@ public class CA1 {
         }
     }
             private static void standardOperation(){
+                
               String studentsFile = "students.txt";
              try  (Scanner sc = new Scanner(new FileReader(studentsFile))){
+                 while (sc.hasNextLine()) {
+    System.out.println(sc.nextLine());
+}
                  while (sc.hasNextLine()){
                     String name = sc.nextLine();
                     String numClassesString = sc.nextLine();
@@ -123,26 +149,26 @@ public class CA1 {
                     
                     try{
                         int numClasses = Integer.parseInt(numClassesString);
-                    
-                        if(checkFirstName(name) && checkSecondName(name) && checkNumClasses(numClasses) && checkStudentNum(studentNumString)){
+                    boolean isValidData = checkData(numClasses,studentNumString, name);
+                        if(isValidData){
                             String statusFile = "status.txt";
-                            try(FileWriter fileWriter = new FileWriter(statusFile, true);
-                                BufferedWriter br = new BufferedWriter(fileWriter)){
-                                
+                            try{
+                                BufferedWriter br = new BufferedWriter(new FileWriter(statusFile));                           
                                 br.write(studentNumString + " - " + name.split(" ")[1]);
                                 br.write(workload(numClasses));
                                 br.newLine();
                                 br.newLine();// add double new line for better layout
-                            }
-                            System.out.println("Data is valid. Output saved to status.txt.");
-                    }
-                    
-                    }catch (NumberFormatException e){
+                                System.out.println("Data is valid. Output saved to status.txt.");
+                            }catch (Exception e){
                         System.out.println("Invalid number of classes: " + e.getMessage());
                     }
                  }
                     }catch (Exception e){
                         System.out.println(e.getMessage());
+                 
+             }
+            }
+             }catch (Exception e){
                  
              }
             }
