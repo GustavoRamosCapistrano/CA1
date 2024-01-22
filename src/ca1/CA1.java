@@ -10,106 +10,140 @@ import java.io.FileWriter;
 import java.util.Scanner;
 
 /**
- *
+ * This program is a student information system.
+ * It includes methods for data validation, file reading, writing and user interaction.
  * @author Gustavo Capistrano
  */
 public class CA1 {
-
+    //validation for the first name (only letters).
     public static boolean checkFirstName(String name) {
+        //slicing the first name and checking for letters
         String firstName = name.substring(0, indexOf(name, " "));
         return (firstName.matches("[a-zA-Z]+"));
     }
-
+// validation for the seconf name (letters and numbers).
     public static boolean checkSecondName(String name) {
+        //slicing the second name after " " to check for letter and numbers.
         String SecondName = name.substring(indexOf(name, " ") + 1);
-        return (SecondName.matches("[A-Z0-9]+"));
+        return (SecondName.matches("[a-zA-Z0-9]+"));
     }
-
+// check for the input of classes to meet the range allowed.
     public static boolean checkNumClasses(int numClasses) {
         return numClasses >= 1 && numClasses <= 8;
 
     }
+// check for correct length for the Student number.
+    public static boolean checkStudentNumLength(String studentNumString) {
+        return studentNumString.length() >= 6;
 
-    public static boolean checkStudentNum(String studentNum) {
-        if (studentNum.length() < 6) {
-            System.out.println("Invalid Student ID: length needs to be more than 6 ");
+    }
+   //Validates that the first two characters of the student number are numbers and greater than or equal to 20. 
+    public static boolean checkTwoFirstNum(String studentNumString) {
+        String firstTwoChars = studentNumString.substring(0, 2);
+        int firstTwoDigits = Integer.parseInt(firstTwoChars);
+        return firstTwoDigits >= 20;
+    }
+//Validates that the third and fourth characters of the student number are letters.
+    public static boolean checkStudentNumLetters(String studentNumString) {
+        if (studentNumString.length() >= 4) {
+            char thirdChar = studentNumString.charAt(2);
+            char forthChar = studentNumString.charAt(3);
+
+            return Character.isLetter(thirdChar) && Character.isLetter(forthChar);
+        } else {
             return false;
         }
+    }
+/**Validates the structure of the student number, ensuring the fifth character is a letter or number,
+ * and the remaining characters (if any) are digits, with a value less than or equal to 200.*/
+    public static boolean checkStudentNum(String studentNumString) {
+        char fifthChar = studentNumString.charAt(4);
+        
 
+        if (Character.isLetter(fifthChar)) {
+            // If the fifth character is a letter, check all following digits
             try {
-                String firstTwoChars = studentNum.substring(0, 2);
-                int firstTwoDigits = Integer.parseInt(firstTwoChars);
-                
-                if (firstTwoDigits < 20) {
-                    System.out.println("Invalid Student ID: first two digits must be 20 or higher.");
-                    return false;
-                }
-                    
-                    char thirdChar = studentNum.charAt(2);
-                    char forthChar = studentNum.charAt(3);
-
-                    if (!(Character.isLetter(thirdChar) && Character.isLetter(forthChar))) {
-                        System.out.println("Invalid Student ID: 3rd and 4th characters must be letters");
-                        return false;
-                    }
-                        
-                        
-                        char fifthChar = studentNum.charAt(4);
-                        if (!Character.isLetter(fifthChar)) {
-                            int remainingDigits = Integer.parseInt(studentNum.substring(5));
-                            return remainingDigits >= 1 && remainingDigits <= 0200;
-                        }else if(!Character.isDigit(fifthChar)){
-                            int remainingDigits = Integer.parseInt(studentNum.substring(4));
-                            return remainingDigits >= 1 && remainingDigits <= 0200;   
-                        }else{
-                            System.out.println("Invalid student ID: 5th character mus be letter or number.");
-                            return false;
-                        }
-            } catch (Exception e) {
-                System.out.println("Invalid student ID: " + e);
+                int remainingDigits = Integer.parseInt(studentNumString.substring(5));
+                return remainingDigits <= 200;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid student ID: Following characters must be digits.");
                 return false;
             }
+        } else if (Character.isDigit(fifthChar)) {
+            // If the fifth character is a digit, check the slice of digits
+            try {
+                int remainingDigits = Integer.parseInt(studentNumString.substring(4));
+                return remainingDigits <= 200;
+            } catch (Exception e) {
+                System.out.println("Invalid student ID: Following characters must be digits.");
+                return false;
+            }
+        } else {
+            System.out.println("Invalid student ID: 5th character must be a letter or number.");
+            return false;
+        }
     }
-    
-        public static String workload(int numClasses) {
-            if (numClasses == 1){
-                return "Vary Light";
-            } else if(numClasses == 2){
-                return "Light";
-            }else if (numClasses >=3 && numClasses <= 5){
-                return "Part Time";
-            }else if (numClasses >= 6){
-                return "Full Time";
-            }else{
-                return "Number of classes out of Range.";
-            } 
-    }
-public static boolean checkData(int numClasses, String studentNum, String name){
-       if (!checkStudentNum(studentNum)) {
-            System.out.println("Incorrect length");
-            return false;
-        }
-        
-        if (!checkNumClasses(numClasses)) {
-            System.out.println("First 7 characters are not numbers");
-            return false;
-        }
-        
-        if (!checkFirstName(name)) {
-            System.out.println("Last characters must be letters");
-            return false;
-        }
-         if (!checkSecondName(name)) {
-            System.out.println("Last characters must be letters");
-            return false;
-        }
-        System.out.println("Valid PPSN!");
-        return true;
-    
+public static boolean checkhasSecondName(String name){
+       // Find the index of the first space
+    int spaceIndex = name.indexOf(" ");
+        // Check if a space was found and there is a second name
+
+return spaceIndex != -1 && spaceIndex < name.length() - 1;
 }
+    public static String workload(int numClasses) {
+        if (numClasses == 1) {
+            return "Vary Light";
+        } else if (numClasses == 2) {
+            return "Light";
+        } else if (numClasses >= 3 && numClasses <= 5) {
+            return "Part Time";
+        } else if (numClasses >= 6) {
+            return "Full Time";
+        } else {
+            return "Number of classes out of Range.";
+        }
+    }
+
+    public static boolean checkData(int numClasses, String studentNumString, String name) {
+            if (checkhasSecondName(name)) {
+            System.out.println("First and second name need to be separeted by a blank space.");
+            return false;
+        }
+        if (!checkFirstName(name)) {
+            System.out.println("First name may just have letters.");
+            return false;
+        }
+        if (!checkSecondName(name)) {
+            System.out.println("Second name must have only letters or numbers.");
+            return false;
+        }
+        if (!checkNumClasses(numClasses)) {
+            System.out.println("Number of classes must be between.");
+            return false;
+        }
+        if (!checkStudentNumLength(studentNumString)) {
+            System.out.println("Student Number has a incorrect length(6 or more).");
+            return false;
+        }
+        if (!checkTwoFirstNum(studentNumString)) {
+            System.out.println("Student Number: 1st and 2nd characters must be numbers and bigger than 20.");
+            return false;
+        }
+        if (!checkStudentNumLetters(studentNumString)) {
+            System.out.println("Student Number: 3rd and 4th characters must be letters.");
+        }
+        if (!checkStudentNum(studentNumString)) {
+            System.out.println("5th caracter need to be a letter or number, final number must be between a range of 1 and 200.");
+            return false;
+        }
+
+        return true;
+
+    }
+
     public static void main(String[] args) {
-            Scanner scMenu = new Scanner(System.in);
-            
+        Scanner scMenu = new Scanner(System.in);
+
         OUTER:
         while (true) {
             System.out.println("Menu: ");
@@ -135,71 +169,62 @@ public static boolean checkData(int numClasses, String studentNum, String name){
             }
         }
     }
-            private static void standardOperation(){
-                
-              String studentsFile = "students.txt";
-             try  (Scanner sc = new Scanner(new FileReader(studentsFile))){
-                 while (sc.hasNextLine()) {
-    System.out.println(sc.nextLine());
-}
-                 while (sc.hasNextLine()){
-                    String name = sc.nextLine();
-                    String numClassesString = sc.nextLine();
-                    String studentNumString = sc.nextLine();
-                    
-                    try{
-                        int numClasses = Integer.parseInt(numClassesString);
-                    boolean isValidData = checkData(numClasses,studentNumString, name);
-                        if(isValidData){
-                            String statusFile = "status.txt";
-                            try{
-                                BufferedWriter br = new BufferedWriter(new FileWriter(statusFile));                           
-                                br.write(studentNumString + " - " + name.split(" ")[1]);
-                                br.write(workload(numClasses));
-                                br.newLine();
-                                br.newLine();// add double new line for better layout
-                                System.out.println("Data is valid. Output saved to status.txt.");
-                            }catch (Exception e){
-                        System.out.println("Invalid number of classes: " + e.getMessage());
-                    }
-                 }
-                    }catch (Exception e){
-                        System.out.println(e.getMessage());
-                 
-             }
+
+    private static void standardOperation() {
+        String studentsFile = "students.txt";
+
+        try ( Scanner sc = new Scanner(new FileReader(studentsFile));  BufferedWriter br = new BufferedWriter(new FileWriter("status.txt", true))) {
+
+            while (sc.hasNextLine()) {
+                String name = sc.nextLine();
+                String numClassesString = sc.nextLine();
+                String studentNumString = sc.nextLine();
+
+                int numClasses = Integer.parseInt(numClassesString);
+                boolean checkedData = checkData(numClasses, studentNumString, name);
+                if (checkedData) {
+                    br.write(studentNumString + " - " + name.split(" ")[1]);
+                    br.newLine();
+                    br.write(workload(numClasses));
+                    br.newLine();
+                    br.newLine(); // add double new line for better layout
+                    System.out.println("Data is valid. Output saved to status.txt.");
+                }
             }
-             }catch (Exception e){
-                 
-             }
-            }
-             private static void addDataViaConsole(){
-                  Scanner scanner = new Scanner(System.in);
+        } catch (Exception e) {
+            System.out.println("An error occurred: " + e.getMessage());
+        }
+    }
+
+    private static void addDataViaConsole() {
+        Scanner scanner = new Scanner(System.in);
 
         // Collect user input for each student
         while (true) {
             System.out.println("Enter student details or 'exit' to finish:");
-            System.out.print("Full Name (First Last): ");
+            System.out.print("Full Name (First and Last name): ");
             String name = scanner.nextLine();
 
             if (name.equalsIgnoreCase("exit")) {
                 break;
             }
 
-            System.out.print("Number of Classes: ");
+            System.out.print("Number of Classes (1-8): ");
             int numClasses = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
 
             System.out.print("Student Number: ");
-            String studentNum = scanner.nextLine();
+            String studentNumString = scanner.nextLine();
 
             // Validate and save data
             try {
-                if (checkFirstName(name) && checkSecondName(name) && checkNumClasses(numClasses) && checkStudentNum(studentNum)) {
-                    String statusFileName = "status.txt";
-                    try (FileWriter fileWriter = new FileWriter(statusFileName, true);
-                         BufferedWriter writer = new BufferedWriter(fileWriter)) {
 
-                        writer.write(studentNum + " - " + name.split(" ")[1]);
+                boolean checkedData = checkData(numClasses, studentNumString, name);
+                if (checkedData) {
+                    String statusFileName = "status.txt";
+                    try ( FileWriter fileWriter = new FileWriter(statusFileName, true);  BufferedWriter writer = new BufferedWriter(fileWriter)) {
+
+                        writer.write(studentNumString + " - " + name.split(" ")[1]);
                         writer.newLine();
                         writer.write(workload(numClasses));
                         writer.newLine();
@@ -211,9 +236,10 @@ public static boolean checkData(int numClasses, String studentNum, String name){
                 System.out.println("Error: " + e.getMessage());
             }
         }
-    
-             }
-             private static int indexOf(String input, String target){
-                 return input.indexOf(target);
-             }
+
+    }
+
+    private static int indexOf(String input, String target) {
+        return input.indexOf(target);
+    }
 }
