@@ -106,10 +106,6 @@ return spaceIndex != -1 && spaceIndex < name.length() - 1;
     }
 // validates all data for students and display helpfull mesages to know were are the error.
     public static boolean checkData(int numClasses, String studentNumString, String name) {
-            if (checkhasSecondName(name)) {
-            System.out.println("First and second name need to be separeted by a blank space.");
-            return false;
-        }
         if (!checkFirstName(name)) {
             System.out.println("First name may just have letters.");
             return false;
@@ -204,19 +200,19 @@ return spaceIndex != -1 && spaceIndex < name.length() - 1;
 
         // Collect user input for each student
         while (true) {
-            System.out.println("Enter student details or 'exit' to finish:");
-            System.out.print("Full Name (First and Last name): ");
+            System.out.println("Enter student details or type 'exit' to finish:");
+            System.out.println("Full Name (First and Last name): ");
             String name = scanner.nextLine();
 
             if (name.equalsIgnoreCase("exit")) {
                 break;
             }
 
-            System.out.print("Number of Classes (1-8): ");
+            System.out.println("Number of Classes (1-8): ");
             int numClasses = scanner.nextInt();
             scanner.nextLine(); // Consume the newline character
 
-            System.out.print("Student Number: ");
+            System.out.println("Student Number: ");
             String studentNumString = scanner.nextLine();
 
             // Validate and save data
