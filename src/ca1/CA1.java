@@ -28,13 +28,17 @@ import java.util.Scanner;
  * place multiple Students information and check one by one. When done with the
  * input, just need to write "exit" and will close the program.
  *
- * Checks: Check for a First and Last name, First name can be only letters,
- * Second name can be letters and numbers. Also check if has a second name and
- * must be separated using a space " ". Check for a Number of classes, been
- * between 1 and 8. After that check what workload fit in eg. Very light, Light
- * ... Check for a Student number: Must be bigger than 6 of length. Must start
- * with 2 numbers and must be bigger than 20. Fallowing for 2 or 3 letters.
- * finishing with numbers that must be between 1 and 200.
+ * Checks:
+ *
+ * Check for a First and Last name. First name can be only letters. Second name
+ * can be letters and numbers. Also check if has a second name and must be
+ * separated using a space " ".
+ *
+ * Check for a Number of classes, been between 1 and 8. After that check what
+ * workload fit in eg. Very light, Light... Check for a Student number: Must be
+ * bigger than 6 of length. Must start with 2 numbers and must be bigger than
+ * 20. Fallowing for 2 or 3 letters. finishing with numbers that must be between
+ * 1 and 200.
  *
  *
  * @author Gustavo Capistrano

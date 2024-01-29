@@ -4,15 +4,23 @@
  */
 package ca1;
 
-
 /**
- *This Java class is to contains all the methods for the System checks.
- * 
- * 
+ * This Java class is to contains all the methods for the System checks.
+ *
+ *  * Checks: Check for a First and Last name. First name can be only letters,
+ * Second name can be letters and numbers. Also check if has a second name and
+ * must be separated using a space " ". Check for a Number of classes, been
+ * between 1 and 8. After that check what workload fit in eg. Very light, Light
+ * ... Check for a Student number: Must be bigger than 6 of length. Must start
+ * with 2 numbers and must be bigger than 20. Fallowing for 2 or 3 letters.
+ * finishing with numbers that must be between 1 and 200.
+ *
+ *
  * @author grc29
  */
 public class Checks {
-        //validation for the first name (only letters).
+    //validation for the first name (only letters).
+
     public static boolean checkFirstName(String name) {
         //slicing the first name and checking for letters
         String firstName = name.substring(0, indexOf(name, " "));
@@ -148,11 +156,11 @@ public class Checks {
         }
 
         return true;
-            
+
     }
+
     public static int indexOf(String input, String target) {
         return input.indexOf(target);
     }
 
-    }
-
+}
