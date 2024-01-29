@@ -84,11 +84,11 @@ public class CA1 {
         }
     }
 public static boolean checkhasSecondName(String name){
-       // Find the index of the first space
+    // Encontrar o índice do primeiro espaço
     int spaceIndex = name.indexOf(" ");
-        // Check if a space was found and there is a second name
-
-return spaceIndex != -1 && spaceIndex < name.length() - 1;
+    
+    // Verificar se um espaço foi encontrado e se há algo depois do espaço
+    return spaceIndex > 0 && spaceIndex < name.length() - 1;
 }
 //determines the workload based on the classes number.
     public static String workload(int numClasses) {
@@ -106,6 +106,10 @@ return spaceIndex != -1 && spaceIndex < name.length() - 1;
     }
 // validates all data for students and display helpfull mesages to know were are the error.
     public static boolean checkData(int numClasses, String studentNumString, String name) {
+        if (!checkhasSecondName(name)) {
+            System.out.println("Must have Space and second name after");
+            return false;
+        }
         if (!checkFirstName(name)) {
             System.out.println("First name may just have letters.");
             return false;
