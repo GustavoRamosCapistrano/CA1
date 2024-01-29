@@ -12,6 +12,30 @@ import java.util.Scanner;
 /**
  * This program is a student information system.
  * It includes methods for data validation, file reading, writing and user interaction.
+ * 
+ * This System contains a menu that allow you to choose between Standard Operation and Add data via console.
+ * 
+ * Standard Operation:
+ * Read a file from "Student.txt" and validate all the Input, data that is approved are printed to a file "status.txt".
+ * Input that is not valid will be showed a message helping to find the mistake.
+ * 
+ * Add data via Console:
+ * Ask for the input from user and validate all the data.
+ * If that is correct are going to print to the file "status.txt.
+ * If not Valid are going to show the error messages to help and fix the input.
+ * When done with the input, just need to write "exit" and will close the program.
+ * 
+ * Checks:
+ * Check for a First and Last name, First name can be only letters, Second name can be letters and numbers.
+ * Also check if has a second name and must be separated using a space " ".
+ * Check for a Number of classes, been between 1 and 8. After that check what workload fit in eg. Very light, Light ...
+ * Check for a Student number:
+ * Must be bigger than 6 of length.
+ * Must start with 2 numbers and must be bigger than 20.
+ * Fallowing for 2 or 3 letters.
+ * finishing with numbers that must be between 1 and 200.
+ * 
+ * 
  * @author Gustavo Capistrano
  */
 public class CA1 {
@@ -148,8 +172,8 @@ public static boolean checkhasSecondName(String name){
         OUTER:
         while (true) {
             System.out.println("Menu: ");
-            System.out.println("1. Standart Operation");
-            System.out.println("2. add data via Console");
+            System.out.println("1. Standard Operation");
+            System.out.println("2. Add data via Console");
             System.out.println("3. Exit");
             System.out.println("Choose an option: ");
             int choice = scMenu.nextInt();
