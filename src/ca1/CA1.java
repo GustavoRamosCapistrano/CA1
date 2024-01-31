@@ -12,6 +12,9 @@ import java.io.FileWriter;
 import java.util.Scanner;
 
 /**
+ * 
+ * GitHub Repo: https://github.com/GustavoRamosCapistrano/CA1
+ * 
  * This program is a student information system. It includes methods for data
  * validation, file reading, writing and user interaction.
  *
